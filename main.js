@@ -74,13 +74,22 @@ class FlowFieldEffect {
         const delY = y-posy;
         const mag = (delX**2 + delY**2)**0.5;
         // console.log(mag);
-        let lambda = mag/Math.max(this.#width, this.#height);
-        
-        lambda = lambda **0.6;
-        length = length * (1-lambda)
-        this.#ctx.strokeStyle = `rgb(${(1-lambda)*255}, 0, ${lambda*255})`;
-        this.#ctx.lineTo(posx + length*delX/mag, posy+ length*delY/mag);
-        this.#ctx.stroke();
+        // if (mag < 100) {
+        //     let lambda = mag / Math.max(this.#width, this.#height);
+        //     ctx.save();
+            
+        //     lambda = lambda ** 0.6;
+        //     length = length * (1 - lambda)
+        //     this.#ctx.strokeStyle = `rgb(${(1 - lambda) * 255}, 0, ${lambda * 255})`;
+        //     this.#ctx.lineTo(posx + length * delX / mag, posy + length * delY / mag);
+        //     this.#ctx.stroke();
+        //     ctx.restore()
+        // }
+        // else {
+        let t = Date.now()/1000000;
+        let angle = ((posx - posy + Math.floor(Math.sin(t)*t))/100);
+            this.#drawAngle(angle, posx, posy, 10)
+        // }
         
 
     }
@@ -90,7 +99,12 @@ class FlowFieldEffect {
         this.#ctx.moveTo(posx, posy);
 
         // console.log(mag);
+        let lambda = ((-angle)*(angle-3.14))/2
+        this.#ctx.strokeStyle = `rgb(${(1 - lambda) * 255}, 0, ${
+          lambda * 255
+        })`;
         this.#ctx.lineTo(posx+ length*Math.cos(angle), posy+ length*Math.sin(-angle));
+        
         this.#ctx.stroke();
 
     }
