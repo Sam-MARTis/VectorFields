@@ -86,9 +86,9 @@ class FlowFieldEffect {
         //     ctx.restore()
         // }
         // else {
-        let t = Date.now()/1000000;
+        let t = Date.now()/900000;
         let angle = ((posx - posy + Math.floor(Math.sin(t)*t))/100);
-            this.#drawAngle(angle, posx, posy, 10)
+            this.#drawAngle(angle%6.28, posx, posy, 10)
         // }
         
 
@@ -99,7 +99,7 @@ class FlowFieldEffect {
         this.#ctx.moveTo(posx, posy);
 
         // console.log(mag);
-        let lambda = ((-angle)*(angle-3.14))/2
+        let lambda = ((-angle)*(angle-6.28))/100
         this.#ctx.strokeStyle = `rgb(${(1 - lambda) * 255}, 0, ${
           lambda * 255
         })`;
